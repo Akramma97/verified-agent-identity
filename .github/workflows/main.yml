@@ -4,39 +4,38 @@ on:
   workflow_dispatch:
     inputs:
       agent_name:
-        description: "Agent Name"
+        description: 'akramma'
         required: true
-        default: "akram"
+        default: 'akramma'
       agent_description:
-        description: "Agent Description"
+        description: 'akramma'
         required: true
-        default: "Akram AI Agent"
+        default: 'akramma AI Agent'
 
 jobs:
   verify:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: '20'
 
-      - name: Install ClawHub Skill
+      - name: Step 1 - Install ClawHub skill
         run: npx clawhub@latest install verified-agent-identity
 
-      - name: Install Script Dependencies
+      - name: Install script dependencies
         run: |
           cd scripts
           npm install
 
-      - name: Create New Ethereum Identity
+      - name: Step 2 - Create new Ethereum Identity
         run: node scripts/createNewEthereumIdentity.js
 
-      - name: Link Human to Agent
+      - name: Step 3 - Link Human to Agent
         run: |
-          node scripts/manualLinkHumanToAgent.js \
-          --challenge "{\"name\":\"akram\",\"description\":\"Akram AI Agent\"}"
+          node scripts/manualLinkHumanToAgent.js --challenge '{"name": "akramma", "description": "akramma AI Agent"}'
